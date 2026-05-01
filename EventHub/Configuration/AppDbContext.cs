@@ -21,6 +21,9 @@ namespace EventHub.Configuration
         {
             modelBuilder.Entity<Event>().HasMany(e => e.Sessions).WithOne(s => s.MyEvent);
             modelBuilder.Entity<Event>().HasMany(e => e.Notes).WithOne(n => n.MyEvent);
+            modelBuilder.Entity<ProfilePage>().HasKey(p => p.OrganizerId);
+            modelBuilder.Entity<Organizer>().HasOne(o => o.Profile).WithOne(p => p.MyOrganizer)
+                                            .HasForeignKey<ProfilePage>(p => p.OrganizerId);
 
             modelBuilder.ApplyConfiguration(new AttendeeConfiguration());
 
